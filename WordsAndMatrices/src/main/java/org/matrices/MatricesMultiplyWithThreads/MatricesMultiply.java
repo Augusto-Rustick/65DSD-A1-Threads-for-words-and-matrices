@@ -8,7 +8,7 @@ import java.io.IOException;
 public class MatricesMultiply {
    public static void main(String[] args) {
       // escolha do caso a ser calculado
-      int caso = 2;
+      int caso = 3;
       // coleta um arrei com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/matrices/dataset/caso" + caso;
       File diretorio = new File(pasta);
