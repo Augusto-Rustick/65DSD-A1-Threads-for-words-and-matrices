@@ -4,15 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class WordsCounter {
     public static void main(String[] args) {
         //org.words.dataset
-        String pasta = "org/words/dataset";
+        String pasta = "words/dataset";
         File diretorio = new File(pasta);
 
         File[] arquivos = diretorio.listFiles();
-
+        System.out.println(Arrays.toString(arquivos));
+        /*
         for (File arquivo : arquivos) {
             if (arquivo.isFile() && arquivo.getName().endsWith(".txt")) {
                 try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo))) {
@@ -34,5 +36,6 @@ public class WordsCounter {
                 }
             }
         }
+         */
     }
 }
