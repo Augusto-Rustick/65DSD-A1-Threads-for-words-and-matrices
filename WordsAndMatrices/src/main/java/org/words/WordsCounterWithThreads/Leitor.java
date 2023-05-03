@@ -1,4 +1,4 @@
-package org.words.WordsCounterWithTwoThreads;
+package org.words.WordsCounterWithThreads;
 
 import java.io.BufferedReader;
 import java.io.File;
