@@ -8,13 +8,10 @@ import java.util.Arrays;
 
 public class WordsCounter {
     public static void main(String[] args) {
-        //org.words.dataset
-        String pasta = "words/dataset";
+        String pasta = "src/main/java/org/words/dataset";
         File diretorio = new File(pasta);
 
         File[] arquivos = diretorio.listFiles();
-        System.out.println(Arrays.toString(arquivos));
-        /*
         for (File arquivo : arquivos) {
             if (arquivo.isFile() && arquivo.getName().endsWith(".txt")) {
                 try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo))) {
@@ -36,6 +33,5 @@ public class WordsCounter {
                 }
             }
         }
-         */
     }
 }
