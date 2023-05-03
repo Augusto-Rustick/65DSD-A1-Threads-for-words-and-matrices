@@ -1,12 +1,10 @@
-package org.words.WordsCounterWithThreads;
+package org.words.WordsCounterWithTwoThreads;
 
 import java.io.*;
-import java.util.Scanner;
-import java.util.concurrent.Semaphore;
 
 public class WordsCounter {
    public static void main(String[] args) {
-      //coleta um arrei com os arquivos de texto do diretorio do dataset
+      //coleta um array com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/words/dataset";
       File diretorio = new File(pasta);
       File[] arquivos = diretorio.listFiles();
@@ -22,8 +20,8 @@ public class WordsCounter {
       int metade = total / 2;
 
       // Cria as threads
-      Thread t1 = new Thread(new Worker(arquivos, word, contador, 0, metade));
-      Thread t2 = new Thread(new Worker(arquivos, word, contador, metade + 1, total - 1));
+      Leitor t1 = new Leitor(arquivos, word, contador, 0, metade - 1);
+      Leitor t2 = new Leitor(arquivos, word, contador, metade, total - 1);
 
       // Inicia as threads
       t1.start();

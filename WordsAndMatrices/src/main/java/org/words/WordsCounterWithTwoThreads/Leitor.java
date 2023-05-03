@@ -1,18 +1,17 @@
-package org.words.WordsCounterWithThreads;
+package org.words.WordsCounterWithTwoThreads;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.Semaphore;
 
-public class Worker implements Runnable {
+public class Leitor extends Thread {
    private File[] arquivos;
    private String word;
    private Contador contador;
    private int start, end;
 
-   public Worker(File[] arquivos, String word, Contador contador, int start, int end) {
+   public Leitor(File[] arquivos, String word, Contador contador, int start, int end) {
       this.arquivos = arquivos;
       this.word = word;
       this.contador = contador;

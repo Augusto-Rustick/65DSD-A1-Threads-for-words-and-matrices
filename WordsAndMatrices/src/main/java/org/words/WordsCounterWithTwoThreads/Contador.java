@@ -1,4 +1,4 @@
-package org.words.WordsCounterWithThreads;
+package org.words.WordsCounterWithTwoThreads;
 
 import java.util.concurrent.Semaphore;
 
