@@ -1,5 +1,4 @@
 name
-hello
 painter
 myth
 find
