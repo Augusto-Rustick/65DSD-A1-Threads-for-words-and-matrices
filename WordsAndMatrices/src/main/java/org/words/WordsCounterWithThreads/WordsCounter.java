@@ -11,22 +11,19 @@ public class WordsCounter {
         File diretorio = new File(pasta);
         File[] arquivos = diretorio.listFiles();
 
-        //variável de auxílio para o contador
-        int countWord = 0;
-
         //pergunta ao usuário a palavra desejada
         String word = "hello";
 
-        // Cria um semáforo com uma permissão
-        Semaphore mutex = new Semaphore(1);
+        // Cria um contador
+        Contador contador = new Contador();
 
         //coleta a metade dos arquivos para as threads
         int total = arquivos.length;
-        int metade =total / 2;
+        int metade = total / 2;
 
         // Cria as threads
-        Thread t1 = new Thread(new Worker(arquivos, word, mutex, countWord, 0, metade));
-        Thread t2 = new Thread(new Worker(arquivos, word, mutex, countWord, metade+1, total));
+        Thread t1 = new Thread(new Worker(arquivos, word, contador, 0, metade));
+        Thread t2 = new Thread(new Worker(arquivos, word, contador, metade + 1, total));
 
         // Inicia as threads
         t1.start();
@@ -40,6 +37,6 @@ public class WordsCounter {
             e.printStackTrace();
         }
 
-        System.out.println("Em todos os arquivos, a palavra '" + word + "' foi encontrada " + countWord + " vezes.");
+        System.out.println("Em todos os arquivos, a palavra '" + word + "' foi encontrada " + contador.getCountWord() + " vezes.");
     }
 }

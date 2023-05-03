@@ -9,14 +9,13 @@ import java.util.concurrent.Semaphore;
 public class Worker implements Runnable {
     private File[] arquivos;
     private String word;
-    private Semaphore semaphore;
-    private int countWord, start, end;
+    private Contador contador;
+    private int start, end;
 
-    public Worker(File[] arquivos, String word, Semaphore semaphore, int countWord,int start,int end) {
+    public Worker(File[] arquivos, String word, Contador contador, int start, int end) {
         this.arquivos = arquivos;
         this.word = word;
-        this.semaphore = semaphore;
-        this.countWord = countWord;
+        this.contador = contador;
         this.start = start;
         this.end = end;
     }
@@ -34,19 +33,16 @@ public class Worker implements Runnable {
                         for (String palavra : palavras) {
                             if (palavra.equals(word)) {
                                 counterFile++;
-                                // Adquire o semáforo para exclusão mútua
-                                semaphore.acquire();
-                                countWord++;
-                                // Libera o semáforo
-                                semaphore.release();
+                                contador.increment();
                             }
                         }
                     }
-                } catch (IOException | InterruptedException e) {
+                } catch (IOException e) {
                     System.out.println("Erro ao ler o arquivo " + arquivo.getName() + ": " + e.getMessage());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
-        System.out.println("Em todos os arquivos, a palavra '" + word + "' foi encontrada " + countWord + " vezes.");
     }
 }
