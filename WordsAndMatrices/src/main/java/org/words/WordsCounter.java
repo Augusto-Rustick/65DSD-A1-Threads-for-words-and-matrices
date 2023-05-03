@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public class WordsCounter {
     public static void main(String[] args) {
-        String pasta = "org/words/dataset-words";
+        //org.words.dataset
+        String pasta = "org/words/dataset";
         File diretorio = new File(pasta);
 
         File[] arquivos = diretorio.listFiles();
