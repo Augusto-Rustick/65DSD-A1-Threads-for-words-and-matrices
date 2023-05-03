@@ -1,21 +1,29 @@
-package org.words.WordsCounterNoThreads;
+package org.words.WordsCounterWithThreads;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 
-public class WordsCounter {
-    public static void main(String[] args) {
-        //coleta um arrei com os arquivos de texto do diretorio do dataset
-        String pasta = "src/main/java/org/words/dataset";
-        File diretorio = new File(pasta);
-        File[] arquivos = diretorio.listFiles();
-        //variável de auxilio para o contador
-        int countWord = 0;
-        String word = "hello";
-        //intera para cada arquivo de txt
+public class Worker implements Runnable {
+    private File[] arquivos;
+    private String word;
+    private Semaphore semaphore;
+    private int countWord, start, end;
+
+    public Worker(File[] arquivos, String word, Semaphore semaphore, int countWord,int start,int end) {
+        this.arquivos = arquivos;
+        this.word = word;
+        this.semaphore = semaphore;
+        this.countWord = countWord;
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public void run() {
+        // Itera para cada arquivo de txt
         for (File arquivo : arquivos) {
             if (arquivo.isFile() && arquivo.getName().endsWith(".txt")) {
                 try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo))) {
@@ -24,20 +32,21 @@ public class WordsCounter {
                     while ((linha = leitor.readLine()) != null) {
                         String[] palavras = linha.split("\\s+");
                         for (String palavra : palavras) {
-                            if (palavra.equalsIgnoreCase(word)) {
+                            if (palavra.equals(word)) {
                                 counterFile++;
+                                // Adquire o semáforo para exclusão mútua
+                                semaphore.acquire();
                                 countWord++;
+                                // Libera o semáforo
+                                semaphore.release();
                             }
                         }
                     }
-                    System.out.println("No arquivo " + arquivo.getName() + ", a palavra '" + word + "' foi encontrada " + counterFile + " vezes.");
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     System.out.println("Erro ao ler o arquivo " + arquivo.getName() + ": " + e.getMessage());
                 }
             }
         }
-
-        System.out.println("Número de arquivos encontrados: " + arquivos.length);
         System.out.println("Em todos os arquivos, a palavra '" + word + "' foi encontrada " + countWord + " vezes.");
     }
 }
