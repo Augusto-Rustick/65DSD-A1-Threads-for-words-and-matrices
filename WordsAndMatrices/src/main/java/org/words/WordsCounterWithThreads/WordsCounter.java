@@ -19,7 +19,7 @@ public class WordsCounter {
       Contador contador = new Contador();
 
       // coleta a quantidade de threads desejada
-      int numThreads = 250;
+      int numThreads = 8;
 
       // calcula quantos arquivos cada thread deve processar
       int total = arquivos.length;
