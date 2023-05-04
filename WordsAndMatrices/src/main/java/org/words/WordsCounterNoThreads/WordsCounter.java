@@ -11,7 +11,7 @@ public class WordsCounter {
    public static void main(String[] args) {
       Instant startTime = Instant.now();
       // pergunta ao usuário a palavra desejada
-      String word = "hello"; //hello   coffee   traditional
+      String word = "traditional"; //hello   coffee   traditional
       // coleta um array com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/words/dataset";
       File diretorio = new File(pasta);

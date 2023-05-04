@@ -10,8 +10,8 @@ public class WordsCounter {
    public static void main(String[] args) {
       Instant startTime = Instant.now();
       // pergunta ao usuário a palavra desejada e a quantidade de threads
-      String word = "hello"; //hello   coffee   traditional
-      int numThreads = 8;
+      String word = "traditional"; //hello   coffee   traditional
+      int numThreads = 250;
       // coleta um array com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/words/dataset";
       File diretorio = new File(pasta);

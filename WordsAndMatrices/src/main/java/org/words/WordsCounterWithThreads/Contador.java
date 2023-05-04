@@ -15,6 +15,7 @@ public class Contador {
    }
 
    public int setCountWord(int countWord) {
+      this.countWord = countWord;
       return countWord;
    }
 
