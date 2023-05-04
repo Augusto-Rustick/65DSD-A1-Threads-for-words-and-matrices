@@ -2,6 +2,8 @@ package org.words.WordsCounterWithThreads;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class Leitor extends Thread {
    private File[] arquivos;
@@ -9,6 +11,7 @@ class Leitor extends Thread {
    private Contador contador;
    private int start;
    private int end;
+   private Pattern pattern;
 
    public Leitor(File[] arquivos, String palavra, Contador contador, int start, int end) {
       this.arquivos = arquivos;
@@ -16,6 +19,7 @@ class Leitor extends Thread {
       this.contador = contador;
       this.start = start;
       this.end = end;
+      this.pattern = Pattern.compile("\\b" + palavra + "\\b");
    }
 
    public void run() {
@@ -23,11 +27,9 @@ class Leitor extends Thread {
          try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arquivos[i]), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-               String[] words = line.split("\\s+");
-               for (String word : words) {
-                  if (word.equals(palavra)) {
-                     contador.increment();
-                  }
+               Matcher matcher = pattern.matcher(line);
+               while (matcher.find()) {
+                  contador.increment();
                }
             }
          } catch (IOException e) {
