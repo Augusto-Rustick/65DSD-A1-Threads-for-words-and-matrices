@@ -9,7 +9,7 @@ import java.time.Instant;
 
 public class MatricesMultiply {
    public static void main(String[] args) {
-      Instant start = Instant.now();
+      Instant startTime = Instant.now();
       // escolha do caso a ser calculado e quantidade de threads
       int caso = 3;
       int numThreads = 8;
@@ -53,8 +53,8 @@ public class MatricesMultiply {
          }
       }
 
-      Instant end = Instant.now();
-      long duration = Duration.between(start, end).toMillis();
+      Instant endTime = Instant.now();
+      long duration = Duration.between(startTime, endTime).toMillis();
       System.out.println("Duração: " + duration + " milisseconds");
       // Imprimir o resultado na tela
       if (caso == 1) {

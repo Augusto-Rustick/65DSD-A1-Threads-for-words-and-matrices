@@ -1,42 +1,37 @@
 package org.words.WordsCounterWithThreads;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
-public class Leitor extends Thread {
+class Leitor extends Thread {
    private File[] arquivos;
-   private String word;
+   private String palavra;
    private Contador contador;
-   private int start, end;
+   private int start;
+   private int end;
 
-   public Leitor(File[] arquivos, String word, Contador contador, int start, int end) {
+   public Leitor(File[] arquivos, String palavra, Contador contador, int start, int end) {
       this.arquivos = arquivos;
-      this.word = word;
+      this.palavra = palavra;
       this.contador = contador;
       this.start = start;
       this.end = end;
    }
 
-   @Override
    public void run() {
-      // Itera para cada arquivo de txt
-      for (int c = start; c <= end; c++) {
-         File arquivo = arquivos[c];
-         //File arquivo : arquivos
-         try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo))) {
-            String linha;
-            while ((linha = leitor.readLine()) != null) {
-               String[] palavras = linha.split("\\s+");
-               for (String palavra : palavras) {
-                  if (palavra.equals(word)) {
+      for (int i = start; i <= end; i++) {
+         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arquivos[i]), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+               String[] words = line.split("\\s+");
+               for (String word : words) {
+                  if (word.equals(palavra)) {
                      contador.increment();
                   }
                }
             }
          } catch (IOException e) {
-            System.out.println("Erro ao ler o arquivo " + arquivo.getName() + ": " + e.getMessage());
+            e.printStackTrace();
          } catch (InterruptedException e) {
             throw new RuntimeException(e);
          }
