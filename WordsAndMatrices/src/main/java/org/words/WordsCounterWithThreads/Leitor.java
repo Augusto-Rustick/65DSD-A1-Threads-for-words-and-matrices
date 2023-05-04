@@ -9,8 +9,7 @@ class Leitor extends Thread {
    private File[] arquivos;
    private String palavra;
    private Contador contador;
-   private int start;
-   private int end;
+   private int start, end, wordCount;
    private Pattern pattern;
 
    public Leitor(File[] arquivos, String palavra, Contador contador, int start, int end) {
@@ -20,6 +19,7 @@ class Leitor extends Thread {
       this.start = start;
       this.end = end;
       this.pattern = Pattern.compile("\\b" + palavra + "\\b");
+      this.wordCount = 0;
    }
 
    public void run() {
@@ -29,14 +29,17 @@ class Leitor extends Thread {
             while ((line = br.readLine()) != null) {
                Matcher matcher = pattern.matcher(line);
                while (matcher.find()) {
-                  contador.increment();
+                  wordCount++;
                }
             }
          } catch (IOException e) {
             e.printStackTrace();
-         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
          }
+      }
+      try {
+         contador.increment(wordCount);
+      } catch (InterruptedException e) {
+         throw new RuntimeException(e);
       }
    }
 }

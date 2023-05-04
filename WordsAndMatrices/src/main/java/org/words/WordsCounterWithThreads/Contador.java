@@ -14,9 +14,13 @@ public class Contador {
       return countWord;
    }
 
-   public void increment() throws InterruptedException {
+   public int setCountWord(int countWord) {
+      return countWord;
+   }
+
+   public void increment(int leitorCount) throws InterruptedException {
       mutex.acquire();
-      countWord++;
+      this.setCountWord(this.getCountWord() + leitorCount);
       mutex.release();
    }
 }
