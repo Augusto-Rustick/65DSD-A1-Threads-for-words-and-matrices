@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 public class MatricesMultiply {
    public static void main(String[] args) {
-      // escolha do caso a ser calculado
+      Instant start = Instant.now();
+      // escolha do caso a ser calculado e quantidade de threads
       int caso = 3;
+      int numThreads = 8;
       // coleta um arrei com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/matrices/dataset/caso" + caso;
       File diretorio = new File(pasta);
@@ -27,17 +31,17 @@ public class MatricesMultiply {
       }
 
       // Realizar a multiplicação das matrizes
+      int[][] matrizBTransposta = transporMatriz(matrizB);
       int[][] matrizResultado = new int[matrizA.length][matrizB[0].length];
 
       // Criar threads para cada linha da matriz resultante
-      int numThreads = 8;
       int tamanhoFatia = matrizA.length / numThreads;
       CalculaLinha[] threads = new CalculaLinha[numThreads];
 
       for (int i = 0; i < numThreads; i++) {
          int inicio = i * tamanhoFatia;
          int fim = (i == numThreads - 1) ? matrizA.length : (i + 1) * tamanhoFatia;
-         threads[i] = new CalculaLinha(matrizA, matrizB, matrizResultado, inicio, fim);
+         threads[i] = new CalculaLinha(matrizA, matrizBTransposta, matrizResultado, inicio, fim);
          threads[i].start();
       }
 
@@ -49,7 +53,9 @@ public class MatricesMultiply {
          }
       }
 
-
+      Instant end = Instant.now();
+      long duration = Duration.between(start, end).toMillis();
+      System.out.println("Duração: " + duration + " milisseconds");
       // Imprimir o resultado na tela
       if (caso == 1) {
          for (int i = 0; i < matrizResultado.length; i++) {
@@ -78,5 +84,19 @@ public class MatricesMultiply {
          System.out.println("Erro ao ler o arquivo " + arquivo + ": " + e.getMessage());
          return null;
       }
+   }
+
+   private static int[][] transporMatriz(int[][] matriz) {
+      int linhas = matriz.length;
+      int colunas = matriz[0].length;
+      int[][] matrizTransposta = new int[colunas][linhas];
+
+      for (int i = 0; i < colunas; i++) {
+         for (int j = 0; j < linhas; j++) {
+            matrizTransposta[i][j] = matriz[j][i];
+         }
+      }
+
+      return matrizTransposta;
    }
 }
