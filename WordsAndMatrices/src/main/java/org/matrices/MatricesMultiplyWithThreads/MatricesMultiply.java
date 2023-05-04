@@ -31,7 +31,6 @@ public class MatricesMultiply {
       }
 
       // Realizar a multiplicação das matrizes
-      int[][] matrizBTransposta = transporMatriz(matrizB);
       int[][] matrizResultado = new int[matrizA.length][matrizB[0].length];
 
       // Criar threads para cada linha da matriz resultante
@@ -41,7 +40,7 @@ public class MatricesMultiply {
       for (int i = 0; i < numThreads; i++) {
          int inicio = i * tamanhoFatia;
          int fim = (i == numThreads - 1) ? matrizA.length : (i + 1) * tamanhoFatia;
-         threads[i] = new CalculaLinha(matrizA, matrizBTransposta, matrizResultado, inicio, fim);
+         threads[i] = new CalculaLinha(matrizA, matrizB, matrizResultado, inicio, fim);
          threads[i].start();
       }
 
@@ -84,19 +83,5 @@ public class MatricesMultiply {
          System.out.println("Erro ao ler o arquivo " + arquivo + ": " + e.getMessage());
          return null;
       }
-   }
-
-   private static int[][] transporMatriz(int[][] matriz) {
-      int linhas = matriz.length;
-      int colunas = matriz[0].length;
-      int[][] matrizTransposta = new int[colunas][linhas];
-
-      for (int i = 0; i < colunas; i++) {
-         for (int j = 0; j < linhas; j++) {
-            matrizTransposta[i][j] = matriz[j][i];
-         }
-      }
-
-      return matrizTransposta;
    }
 }
