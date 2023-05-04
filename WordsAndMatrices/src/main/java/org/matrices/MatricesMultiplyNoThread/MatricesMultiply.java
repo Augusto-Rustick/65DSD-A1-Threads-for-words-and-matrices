@@ -13,19 +13,15 @@ public class MatricesMultiply {
       String pasta = "src/main/java/org/matrices/dataset/caso" + caso;
       File diretorio = new File(pasta);
       File[] arquivos = diretorio.listFiles();
-
       // Ler a matriz A do arquivo A.txt
       int[][] matrizA = lerMatrizDoArquivo(arquivos[0]);
-
       // Ler a matriz B do arquivo B.txt
       int[][] matrizB = lerMatrizDoArquivo(arquivos[1]);
-
       // Verificar se as dimensões das matrizes são compatíveis para a multiplicação
       if (matrizA[0].length != matrizB.length) {
          System.out.println("As dimensões das matrizes não são compatíveis para a multiplicação");
          return;
       }
-
       // Realizar a multiplicação das matrizes
       int[][] matrizResultado = new int[matrizA.length][matrizB[0].length];
       for (int i = 0; i < matrizA.length; i++) {
@@ -35,7 +31,6 @@ public class MatricesMultiply {
             }
          }
       }
-
       // Imprimir o resultado na tela
       for (int i = 0; i < matrizResultado.length; i++) {
          for (int j = 0; j < matrizResultado[0].length; j++) {
