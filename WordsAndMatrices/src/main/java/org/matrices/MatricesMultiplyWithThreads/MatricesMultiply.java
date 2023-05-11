@@ -11,8 +11,8 @@ public class MatricesMultiply {
    public static void main(String[] args) {
       Instant startTime = Instant.now();
       // escolha do caso a ser calculado e quantidade de threads
-      int caso = 1;
-      int numThreads = 8;
+      int caso = 3;
+      int numThreads = 10000;
       // coleta um arrei com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/matrices/dataset/caso" + caso;
       File diretorio = new File(pasta);

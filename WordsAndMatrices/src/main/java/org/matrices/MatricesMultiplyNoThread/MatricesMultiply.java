@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 public class MatricesMultiply {
    public static void main(String[] args) {
+      Instant startTime = Instant.now();
       //escolha do caso a ser calculado
-      int caso = 1;
-      //coleta um arrei com os arquivos de texto do diretorio do dataset
+      int caso = 2;
+      //coleta um array] com os arquivos de texto do diretorio do dataset
       String pasta = "src/main/java/org/matrices/dataset/caso" + caso;
       File diretorio = new File(pasta);
       File[] arquivos = diretorio.listFiles();
@@ -31,14 +34,18 @@ public class MatricesMultiply {
             }
          }
       }
+      Instant endTime = Instant.now();
+      long duration = Duration.between(startTime, endTime).toMillis();
+      System.out.println("Duração: " + duration + " milisseconds");
       // Imprimir o resultado na tela
-      for (int i = 0; i < matrizResultado.length; i++) {
-         for (int j = 0; j < matrizResultado[0].length; j++) {
-            System.out.print(matrizResultado[i][j] + " ");
+      if (caso == 1) {
+         for (int i = 0; i < matrizResultado.length; i++) {
+            for (int j = 0; j < matrizResultado[0].length; j++) {
+               System.out.print(matrizResultado[i][j] + " ");
+            }
+            System.out.println();
          }
-         System.out.println();
       }
-
    }
 
    // Função para ler a matriz de um arquivo
